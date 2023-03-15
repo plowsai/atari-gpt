@@ -40,14 +40,6 @@ app.get("/terms-of-service", (req, res) => {
     res.render("terms.ejs")
  })
 
-app.get("/privacy-policy", (req, res) => {
-    res.render("privacy.ejs")
- })
-app.get("/404", (req, res) => {
-    res.render("error-pages/404.ejs")
- })
-
-
 app.use(express.static('public'))
 
 app.listen(port, () => {
