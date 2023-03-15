@@ -118,13 +118,20 @@ body {
     background-color: red;
     border-radius: 50%;
     position: relative;
-    width: 150%;
-    height: 150%;
-    transform: translate(-25%, -25%);
+    width: 100%; /* Adjust the size by changing the width */
+    height: 100%; /* Adjust the size by changing the height */
+    transform: translate(0, 0);
   }
+  
   
   .grid-cell {
     /* ...existing styles... */
     position: relative; /* Add this line */
   }
   
+  #score,
+  #timer {
+    font-size: 24px;
+    font-family: 'Arial', sans-serif;
+    margin: 10px;
+}

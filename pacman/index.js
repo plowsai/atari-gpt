@@ -75,13 +75,38 @@ function movePacman(direction) {
     }
   }
   
-  function isValidMove(position) {
-    return (
-      position.x >= 0 &&
-      position.x < gridSize &&
-      position.y >= 0 &&
-      position.y < gridSize
-    );
+  function isValidMove(position, isPacman = true) {
+    if (
+      position.x < 0 ||
+      position.x >= gridSize ||
+      position.y < 0 ||
+      position.y >= gridSize
+    ) {
+      return false;
+    }
+  
+    const cell = gameGrid[position.y][position.x];
+    if (isPacman && cell.classList.contains('ghost')) {
+      // Add code to eat the ghost and update the game state
+      const ghostId = cell.dataset.ghostId;
+      eatGhost(ghostId);
+      return true;
+    }
+  
+    return true;
+  }
+  
+  function eatGhost(ghostId) {
+    // Find the ghost object by its id
+    const ghostIndex = ghosts.findIndex(ghost => ghost.id === parseInt(ghostId));
+  
+    if (ghostIndex > -1) {
+      // Remove the ghost from the array and the grid
+      const ghost = ghosts[ghostIndex];
+      gameGrid[ghost.position.y][ghost.position.x].classList.remove('ghost');
+      delete gameGrid[ghost.position.y][ghost.position.x].dataset.ghostId;
+      ghosts.splice(ghostIndex, 1);
+    }
   }
   
   const ghosts = [
@@ -216,3 +241,5 @@ function handleKeyPress(event) {
     updatePacmanRotation(direction); // Add this line
   }
 }
+
+

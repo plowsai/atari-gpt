@@ -10,7 +10,9 @@ const leftPaddle = {
     y: canvas.height / 2 - paddleHeight / 2,
     width: paddleWidth,
     height: paddleHeight,
-    dy: 4
+    dy: 4,
+    upPressed: false,
+    downPressed: false
 };
 
 const rightPaddle = {
@@ -18,8 +20,11 @@ const rightPaddle = {
     y: canvas.height / 2 - paddleHeight / 2,
     width: paddleWidth,
     height: paddleHeight,
-    dy: 4
+    dy: 4,
+    upPressed: false,
+    downPressed: false
 };
+
 
 const ball = {
     x: canvas.width / 2,
@@ -46,15 +51,20 @@ function drawBall(x, y, radius) {
 }
 
 function update() {
-    leftPaddle.y += leftPaddle.dy;
-    rightPaddle.y -= rightPaddle.dy;
-
-    if (leftPaddle.y < 0 || leftPaddle.y + paddleHeight > canvas.height) {
-        leftPaddle.dy = -leftPaddle.dy;
+    if (leftPaddle.upPressed && leftPaddle.y > 0) {
+        leftPaddle.y -= leftPaddle.dy;
     }
 
-    if (rightPaddle.y < 0 || rightPaddle.y + paddleHeight > canvas.height) {
-        rightPaddle.dy = -rightPaddle.dy;
+    if (leftPaddle.downPressed && leftPaddle.y + paddleHeight < canvas.height) {
+        leftPaddle.y += leftPaddle.dy;
+    }
+
+    if (rightPaddle.upPressed && rightPaddle.y > 0) {
+        rightPaddle.y -= rightPaddle.dy;
+    }
+
+    if (rightPaddle.downPressed && rightPaddle.y + paddleHeight < canvas.height) {
+        rightPaddle.y += rightPaddle.dy;
     }
 
     ball.x += ball.dx;
@@ -94,5 +104,41 @@ function gameLoop() {
     update();
     requestAnimationFrame(gameLoop);
 }
+
+function keyDownHandler(event) {
+    switch (event.code) {
+        case "KeyW":
+            leftPaddle.upPressed = true;
+            break;
+        case "KeyS":
+            leftPaddle.downPressed = true;
+            break;
+        case "ArrowUp":
+            rightPaddle.upPressed = true;
+            break;
+        case "ArrowDown":
+            rightPaddle.downPressed = true;
+            break;
+    }
+}
+
+function keyUpHandler(event) {
+    switch (event.code) {
+        case "KeyW":
+            leftPaddle.upPressed = false;
+            break;
+        case "KeyS":
+            leftPaddle.downPressed = false;
+            break;
+        case "ArrowUp":
+            rightPaddle.upPressed = false;
+            break;
+        case "ArrowDown":
+            rightPaddle.downPressed = false;
+            break;
+    }
+}
+document.addEventListener("keydown", keyDownHandler);
+document.addEventListener("keyup", keyUpHandler);
 
 gameLoop();
