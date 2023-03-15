@@ -11,17 +11,17 @@ app.get('/', (req, res) => {
 
 // Route to the games page
 app.get('/pacman/index', (req, res) => {
-  res.sendFile(__dirname + '/public/pacman/index.html');
+  res.sendFile(__dirname + 'pacman/index.html');
 });
 
 // Route to the Pacman game page
-app.get('/space/index', (req, res) => {
-  res.sendFile(__dirname + '/public/space/index.html');
+app.get('/invaders/index', (req, res) => {
+  res.sendFile(__dirname + 'invaders/index.html');
 });
 
 // Route to the Space Invaders game page
 app.get('/pong/index', (req, res) => {
-  res.sendFile(__dirname + '/public/pong/index.html');
+  res.sendFile(__dirname + 'pong/index.html');
 });
 
 // Start the server
